@@ -193,17 +193,20 @@
     });
     
     
-    Promise.all([p11, p12, p31])
-        .then(console.log) // never execute
-        .catch(console.log);
+    Promise.all([p11, p12, p13])
+    .then(value => console.log(`Resolved: ${value}`))// never execute
+    .catch(reason => console.log(`Rejected: ${reason}`));
     
     // Output
     //     The first promise has resolved
     //     The second promise has rejected
-    //     Failed
+    //     Rejected: Failed
     //     The third promise has resolved
 
 // The Promise.race() static method accepts a list of promises as an iterable object and returns a new promise that fulfills or rejects as soon as there is one promise that fulfills or rejects, with the value or reason from that promise.
+
+// The Promise.race() method returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects, with the value or reason from that promise.
+
     const p111 = new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('The first promise has resolved');
@@ -256,6 +259,9 @@
             //     The second promise has rejected
     
 // If one of the promises in the iterable object is fulfilled, the Promise.any() returns a single promise that resolves to a value which is the result of the fulfilled promise:
+
+// Promise.any() takes an iterable of Promise objects. It returns a single promise that fulfills as soon as any of the promises in the iterable fulfills, with the value of the fulfilled promise. If no promises in the iterable fulfill (if all of the given promises are rejected), then the returned promise is rejected with an AggregateError, a new subclass of Error that groups together individual errors.
+
     // All promises fulfilled example
         const p1 = new Promise((resolve, reject) => {
             setTimeout(() => {
