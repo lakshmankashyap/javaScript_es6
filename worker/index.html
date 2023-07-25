@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>Big for loop</title>
+
+    
+
+</head>
+
+<body>
+    <input type="button" onclick="bigLoop();" value="Big Loop" />
+    <input type="button" onclick="sayHello();" value="Say Hello" />
+    <div id="result">
+        <!--Received messages will be inserted here-->
+    </div>
+    <script>
+        // if (window.Worker) {
+        //     // Create a new web worker
+        //     var worker = new Worker("bigLoop.js");
+
+        //     function bigLoop(){
+        //         // Fire onMessage event handler
+        //         worker.onmessage = function (event) {
+        //             document.getElementById("result").innerHTML = event.data;
+        //         };
+        //     }
+        // } else {
+        //     alert("Sorry, your browser do not support web worker.");
+        // }
+
+        function bigLoop() {
+            for(let i =0;i<1000000000000;i++) {
+                i = i + 1;
+                document.getElementById("result").innerHTML = i;
+            }
+        
+            // Wait for sometime before running this script again
+        }
+        function sayHello() {
+            alert("Hello sir....");
+        }
+    </script>
+</body>
+
+</html>

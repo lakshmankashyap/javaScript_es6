@@ -73,6 +73,9 @@ myCarDetails();//Well, this won’t work as the “this” will be now assigned 
 
     
 //call() and apply() methods
+/* 
+Both  call  and  apply  invoke a function. Their only difference is that  call  accepts arguments in a comma-separated fashion while  apply  requires arguments to be passed as an array or an array-like object.
+ */
 // Similar but slightly different usage provide the call() and apply() methods which also belong to the Function.prototype property.
     var car = { 
         registrationNumber: "GA12345",
@@ -172,3 +175,21 @@ https://javascript.plainenglish.io/quick-guide-to-call-apply-and-bind-methods-in
     bound(3,1)
 
     add(3,1)
+    /////
+    function sayHello(greeting) {
+        return `${greeting}, ${this.name}`;
+      }
+      
+      const user = {
+        name: 'Harrison',
+      };
+      
+      // using call
+      console.log(sayHello.call(user, 'Hello')); // prints "Hello, Harrison"
+      
+      // using apply
+      console.log(sayHello.apply(user, ['Good morning'])); // prints "Good morning, Harrison"
+      
+      // using bind
+      const boundSayHello = sayHello.bind(user, 'Hey there');
+      console.log(boundSayHello()); // prints "Hey there, Harrison"
