@@ -2,6 +2,8 @@
 
 // The fundamental operations can be the property lookup, assignment, enumeration, and function invocations, etc.
 
+// Proxy allows you to add custom behavior to an object or a function.
+
 let proxy = new Proxy(target, handler);
 
 const user = {

@@ -3,193 +3,221 @@
 //     “this” refers to an object which calls the function it contains.
 //     In the global context “this” refers to either window object or is undefined if the ‘strict mode’ is used.
 
-var car = { 
-    registrationNumber: "GA12345",
-    brand: "Toyota",
+var car = {
+  registrationNumber: "GA12345",
+  brand: "Toyota",
 
-    displayDetails: function(){
-        console.log(this.registrationNumber + " " + this.brand);
-    }
-}
+  displayDetails: function () {
+    console.log(this.registrationNumber + " " + this.brand);
+  },
+};
 
 car.displayDetails(); // GA12345 Toyota
 
 //But what if we want to borrow a method?
-var myCarDetails =  car.displayDetails;
-myCarDetails();//Well, this won’t work as the “this” will be now assigned to the global context which doesn’t have neither the registrationNumber nor the brand property.
+var myCarDetails = car.displayDetails;
+myCarDetails(); //Well, this won’t work as the “this” will be now assigned to the global context which doesn’t have neither the registrationNumber nor the brand property.
 
 // The bind() Method
-    var myCarDetails = car.displayDetails.bind(car); 
-    myCarDetails(); // GA12345 Toyota
+var myCarDetails = car.displayDetails.bind(car);
+myCarDetails(); // GA12345 Toyota
 
-    var car = { 
-        registrationNumber: "GA12345",
-        brand: "Toyota",
-    
-        displayDetails: function(ownerName){
-            console.log(ownerName + ", this is your car: " + this.registrationNumber + " " + this.brand);
-        }
-    }
+var car = {
+  registrationNumber: "GA12345",
+  brand: "Toyota",
 
-    var myCarDetails = car.displayDetails.bind(car, "Vivian"); // Vivian, this is your car: GA12345 Toyota
-    myCarDetails()
+  displayDetails: function (ownerName) {
+    console.log(
+      ownerName +
+        ", this is your car: " +
+        this.registrationNumber +
+        " " +
+        this.brand
+    );
+  },
+};
 
+var myCarDetails = car.displayDetails.bind(car, "Vivian"); // Vivian, this is your car: GA12345 Toyota
+myCarDetails();
 
-    var pokemon = {
-        firstname: 'Pika',
-        lastname: 'Chu ',
-        getPokeName: function() {
-            var fullname = this.firstname + ' ' + this.lastname;
-            return fullname;
-        }
-    };
-    
-    var pokemonName = function() {
-        console.log(this.getPokeName() + 'I choose you!');
-    };
-    
-    var logPokemon = pokemonName.bind(pokemon); // creates new object and binds pokemon. 'this' of pokemon === pokemon now
-    
-    logPokemon(); // 'Pika Chu I choose you!'
+var pokemon = {
+  firstname: "Pika",
+  lastname: "Chu ",
+  getPokeName: function () {
+    var fullname = this.firstname + " " + this.lastname;
+    return fullname;
+  },
+};
 
-    ////////////
-    var pokemon = {
-        firstname: 'Pika',
-        lastname: 'Chu ',
-        getPokeName: function() {
-            var fullname = this.firstname + ' ' + this.lastname;
-            return fullname;
-        }
-    };
-    
-    var pokemonName = function(snack, hobby) {
-        console.log(this.getPokeName() + 'I choose you!');
-        console.log(this.getPokeName() + ' loves ' + snack + ' and ' + hobby);
-    };
-    
-    var logPokemon = pokemonName.bind(pokemon); // creates new object and binds pokemon. 'this' of pokemon === pokemon now
-    
-    logPokemon('sushi', 'algorithms'); // Pika Chu  loves sushi and algorithms
+var pokemonName = function () {
+  console.log(this.getPokeName() + "I choose you!");
+};
 
-    
+var logPokemon = pokemonName.bind(pokemon); // creates new object and binds pokemon. 'this' of pokemon === pokemon now
+
+logPokemon(); // 'Pika Chu I choose you!'
+
+////////////
+var pokemon = {
+  firstname: "Pika",
+  lastname: "Chu ",
+  getPokeName: function () {
+    var fullname = this.firstname + " " + this.lastname;
+    return fullname;
+  },
+};
+
+var pokemonName = function (snack, hobby) {
+  console.log(this.getPokeName() + "I choose you!");
+  console.log(this.getPokeName() + " loves " + snack + " and " + hobby);
+};
+
+var logPokemon = pokemonName.bind(pokemon); // creates new object and binds pokemon. 'this' of pokemon === pokemon now
+
+logPokemon("sushi", "algorithms"); // Pika Chu  loves sushi and algorithms
+
 //call() and apply() methods
 /* 
 Both  call  and  apply  invoke a function. Their only difference is that  call  accepts arguments in a comma-separated fashion while  apply  requires arguments to be passed as an array or an array-like object.
  */
 // Similar but slightly different usage provide the call() and apply() methods which also belong to the Function.prototype property.
-    var car = { 
-        registrationNumber: "GA12345",
-        brand: "Toyota"
-    }
+var car = {
+  registrationNumber: "GA12345",
+  brand: "Toyota",
+};
 
-    function displayDetails(ownerName) {
-        console.log(ownerName + ", this is your car: " + this.registrationNumber + " " + this.brand);
-    }
+function displayDetails(ownerName) {
+  console.log(
+    ownerName +
+      ", this is your car: " +
+      this.registrationNumber +
+      " " +
+      this.brand
+  );
+}
 
-    displayDetails.apply(car, ["Vivian"]); // Vivian, this is your car: GA12345 Toyota
-    displayDetails.call(car, "Vivian"); // Vivian, this is your car: GA12345 Toyota
+displayDetails.apply(car, ["Vivian"]); // Vivian, this is your car: GA12345 Toyota
+displayDetails.call(car, "Vivian"); // Vivian, this is your car: GA12345 Toyota
 
+var pokemon = {
+  firstname: "Pika",
+  lastname: "Chu ",
+  getPokeName: function () {
+    var fullname = this.firstname + " " + this.lastname;
+    return fullname;
+  },
+};
 
-    var pokemon = {
-        firstname: 'Pika',
-        lastname: 'Chu ',
-        getPokeName: function() {
-            var fullname = this.firstname + ' ' + this.lastname;
-            return fullname;
-        }
-    };
-    
-    var pokemonName = function(snack, hobby) {
-        console.log(this.getPokeName() + ' loves ' + snack + ' and ' + hobby);
-    };
-    
-    pokemonName.call(pokemon,'sushi', 'algorithms'); // Pika Chu  loves sushi and algorithms
-    pokemonName.apply(pokemon,['sushi', 'algorithms']); // Pika Chu  loves sushi and algorithms
-    
+var pokemonName = function (snack, hobby) {
+  console.log(this.getPokeName() + " loves " + snack + " and " + hobby);
+};
 
-    const person = {
-        fullName: function() {
-          return this.firstName + " " + this.lastName;
-        }
-      }
-      const person1 = {
-        firstName:"John",
-        lastName: "Doe"
-      }
-      const person2 = {
-        firstName:"Mary",
-        lastName: "Doe"
-      }
-      
-      // This will return "Mary Doe"
-      person.fullName.call(person2);
-      // This will return "John Doe":
-     person.fullName.call(person1);
+pokemonName.call(pokemon, "sushi", "algorithms"); // Pika Chu  loves sushi and algorithms
+pokemonName.apply(pokemon, ["sushi", "algorithms"]); // Pika Chu  loves sushi and algorithms
 
+const person = {
+  fullName: function () {
+    return this.firstName + " " + this.lastName;
+  },
+};
+const person1 = {
+  firstName: "John",
+  lastName: "Doe",
+};
+const person2 = {
+  firstName: "Mary",
+  lastName: "Doe",
+};
 
-    //The Difference Between call() and apply()
-        // The difference is:
-        //     The call() method takes arguments separately.
-        //     The apply() method takes arguments as an array.
+// This will return "Mary Doe"
+person.fullName.call(person2);
+// This will return "John Doe":
+person.fullName.call(person1);
 
-     const person = {
-        fullName: function(city, country) {
-          return this.firstName + " " + this.lastName + "," + city + "," + country;
-        }
-      }
-      
-      const person1 = {
-        firstName:"John",
-        lastName: "Doe"
-      }
-      
-      person.fullName.call(person1, "Oslo", "Norway");
-      person.fullName.apply(person1, ["Oslo", "Norway"]);
+//The Difference Between call() and apply()
+// The difference is:
+//     The call() method takes arguments separately.
+//     The apply() method takes arguments as an array.
+
+const person = {
+  fullName: function (city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  },
+};
+
+const person1 = {
+  firstName: "John",
+  lastName: "Doe",
+};
+
+person.fullName.call(person1, "Oslo", "Norway");
+person.fullName.apply(person1, ["Oslo", "Norway"]);
 //Learning Exercise !!!
-    var func = function() {
-        console.log(this)
-    }.bind(1);
+var func = function () {
+  console.log(this);
+}.bind(1);
 
-    func();
-    
-    function checkFun(a, b, c){
-        console.log(this);
-        console.log(a);
-        console.log(b);
-        console.log(c);
-    }
-    checkFun.call(1,2,3,4);
+func();
+
+function checkFun(a, b, c) {
+  console.log(this);
+  console.log(a);
+  console.log(b);
+  console.log(c);
+}
+checkFun.call(1, 2, 3, 4);
 
 //A Quick Guide to Call, Apply and Bind Methods
-https://javascript.plainenglish.io/quick-guide-to-call-apply-and-bind-methods-in-javascript-5c00cd856cfa
+//javascript.plainenglish.io/quick-guide-to-call-apply-and-bind-methods-in-javascript-5c00cd856cfa
 
-    var obj = {num:2}
+https: var obj = { num: 2 };
 
-    var add =  function(a,b){
-        return this.num+a+b
-    }
+var add = function (a, b) {
+  return this.num + a + b;
+};
 
-    add.call(obj,3,1)
-    add.apply(obj,[3,1])
-    var bound = add.bind(obj);
-    bound(3,1)
+add.call(obj, 3, 1);
+add.apply(obj, [3, 1]);
+var bound = add.bind(obj);
+bound(3, 1);
 
-    add(3,1)
-    /////
-    function sayHello(greeting) {
-        return `${greeting}, ${this.name}`;
-      }
-      
-      const user = {
-        name: 'Harrison',
-      };
-      
-      // using call
-      console.log(sayHello.call(user, 'Hello')); // prints "Hello, Harrison"
-      
-      // using apply
-      console.log(sayHello.apply(user, ['Good morning'])); // prints "Good morning, Harrison"
-      
-      // using bind
-      const boundSayHello = sayHello.bind(user, 'Hey there');
-      console.log(boundSayHello()); // prints "Hey there, Harrison"
+add(3, 1);
+/////
+function sayHello(greeting) {
+  return `${greeting}, ${this.name}`;
+}
+
+const user = {
+  name: "Harrison",
+};
+
+// using call
+console.log(sayHello.call(user, "Hello")); // prints "Hello, Harrison"
+
+// using apply
+console.log(sayHello.apply(user, ["Good morning"])); // prints "Good morning, Harrison"
+
+// using bind
+const boundSayHello = sayHello.bind(user, "Hey there");
+console.log(boundSayHello()); // prints "Hey there, Harrison"
+
+//   call: It invokes a function with a specified this context and arguments provided individually.
+function greet(name) {
+  console.log(`Hello, ${name}! My name is ${this.name}.`);
+}
+
+const person = { name: "Alice" };
+
+greet.call(person, "Bob");
+// Output: Hello, Bob! My name is Alice.
+
+// apply: It's similar to call, but it takes arguments as an array.
+function greet(name, city) {
+  console.log(`Hello, ${name} from ${city}! My name is ${this.name}.`);
+}
+
+const person = { name: "Alice" };
+const args = ["Bob", "New York"];
+
+greet.apply(person, args);
+// Output: Hello, Bob from New York! My name is Alice.
